@@ -1,3 +1,3 @@
-module github.com/JumaOchi/msg-sdk-go
+module msg-sdk-go
 
 go 1.23.4
