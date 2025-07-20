@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"msg-sdk-go/identity"
 	"msg-sdk-go/transport"
 	"time"
 )
@@ -33,6 +34,8 @@ func testTCPTransport() {
 		fmt.Println("Error sending message:", err)
 		return
 	}
+	kp, _ := identity.GenerateKeypair()
+	fmt.Printf("Public Key: %x\n", kp.PublicKey)
 
 	// Wait a bit if you’re testing against a local echo server *need to be optimised
 	time.Sleep(1 * time.Second)
