@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"msg-sdk-go/identity"
 	"msg-sdk-go/transport"
 	"time"
 )
@@ -9,7 +10,19 @@ import (
 // entry point for the CLI SDK.
 func main() {
 	fmt.Println("Noise CLI SDK starting up...")
+    kp, err := identity.GenerateKeypair()
+	if err != nil {
+		fmt.Println("Key generation failed  :=(  ", err)
+		return
+	}
 
+	path := identity.DefaultKeypairPath()
+	if err := identity.SaveKeypair(kp, path); err != nil {
+		fmt.Println("Failed to save key :(  ", err)
+		return
+	}
+
+	fmt.Println("Keypair saved to :) ", path)
 	// Run a test *TCP
 	testTCPTransport()
 }
@@ -33,6 +46,8 @@ func testTCPTransport() {
 		fmt.Println("Error sending message:", err)
 		return
 	}
+	kp, _ := identity.GenerateKeypair()
+	fmt.Printf("Public Key: %x\n", kp.PublicKey)
 
 	// Wait a bit if you’re testing against a local echo server *need to be optimised
 	time.Sleep(1 * time.Second)
