@@ -80,9 +80,6 @@ Contributions are welcome. To contribute:
 
 Please follow the existing file structure and keep commits clear and focused.
 
-## License
-To be added. MIT or Apache-2.0 recommended.
-
 ## Maintainers
 Developed and maintained by [https://codehubbers.com/](https://codehubbers.com/)
 
