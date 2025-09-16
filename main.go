@@ -10,7 +10,19 @@ import (
 // entry point for the CLI SDK.
 func main() {
 	fmt.Println("Noise CLI SDK starting up...")
+    kp, err := identity.GenerateKeypair()
+	if err != nil {
+		fmt.Println("Key generation failed  :=(  ", err)
+		return
+	}
 
+	path := identity.DefaultKeypairPath()
+	if err := identity.SaveKeypair(kp, path); err != nil {
+		fmt.Println("Failed to save key :(  ", err)
+		return
+	}
+
+	fmt.Println("Keypair saved to :) ", path)
 	// Run a test *TCP
 	testTCPTransport()
 }

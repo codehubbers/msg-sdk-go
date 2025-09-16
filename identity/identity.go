@@ -8,6 +8,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/user"
+	"path/filepath"
 
 	"golang.org/x/crypto/curve25519"
 )
@@ -50,7 +52,18 @@ func SaveKeypair(kp *Keypair, filepath string) error {
 
 	return json.NewEncoder(f).Encode(kp)
 }
+func DefaultKeypairPath() string {
+	usr, err := user.Current()
+	if err != nil {
+		
+		return filepath.Join(os.TempDir(), "keypair.json")
+	}
 
+	dir := filepath.Join(usr.HomeDir, ".msg-sdk")
+	os.MkdirAll(dir, 0700) // silently create dir if missing
+
+	return filepath.Join(dir, "keypair.json")
+}
 // LoadKeypair loads a keypair from file
 func LoadKeypair(filepath string) (*Keypair, error) {
 	f, err := os.Open(filepath)
